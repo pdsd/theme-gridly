@@ -2,19 +2,60 @@
 <html prefix="og: http://ogp.me/ns#" xmlns:og="http://ogp.me/ns#">
   <head>
     <meta charset="utf-8">
+    <link rel="SHORTCUT ICON" href="http://pd.sim.edu.sg/sim/pro/data/data/simone.ico">
     <title>
-      {% if is_login %}Login
-      {% elif is_home %}{{ site.author }}
-      {% elif is_tag %}{{ tag }}
-      {% elif post %}{{ post.title }}
-      {% endif %}
-      | {{ site.name }}
+        {% if is_login %}Login
+        {% elif is_home %}{{ site.author }}
+        {% elif is_tag %}{{ tag }}
+        {% elif post.type == 'post' %}{{ post.title }}
+        {% elif post.type == 'link' %}{{ link.title }}
+        {% elif post.type == 'page' %}{{ page.title }}
+        {% endif %} 
+        | {{ site.name }}
     </title>
 
     {{ header_meta }}
 
-    <link href="{{ assets('css/style.css') }}" rel="stylesheet" />
-
+    <link href="{{ static('themes/gridly/css/gridly.css') }}" rel="stylesheet" />
+    <!--[if lt IE 9]>
+        <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    
+		<!-- Begin MailChimp Signup Form -->
+		<link href="//cdn-images.mailchimp.com/embedcode/classic-081711.css" rel="stylesheet" type="text/css">
+			<style type="text/css">
+		#mc_embed_signup{background:#fff; clear:left; font:14px Helvetica,Arial,sans-serif; }
+		/* Add your own MailChimp form style overrides in your site stylesheet or in this style block.
+		We recommend moving this block and the preceding CSS link to the HEAD of your HTML file. */
+			</style>
+				<div id="mc_embed_signup">
+					<form action="//postach.us8.list-manage.com/subscribe/post?u=8f57f508082f384933da29d05&amp;id=90738edac7" method="post" id="mc-embedded-subscribe-form" name="mc-embedded-subscribe-form" class="validate" target="_blank" novalidate>
+						<h2>Subscribe to our mailing list</h2>
+				<div class="indicates-required"><span class="asterisk">*</span> indicates required</div>
+				<div class="mc-field-group">
+				<label for="mce-EMAIL">Email Address  <span class="asterisk">*</span>
+				</label>
+				<input type="email" value="" name="EMAIL" class="required email" id="mce-EMAIL">
+				</div>
+				<div class="mc-field-group">
+				<label for="mce-FNAME">First Name </label>
+				<input type="text" value="" name="FNAME" class="" id="mce-FNAME">
+				</div>
+				<div class="mc-field-group">
+				<label for="mce-LNAME">Last Name </label>
+				<input type="text" value="" name="LNAME" class="" id="mce-LNAME">
+				</div>
+				<div id="mce-responses" class="clear">
+				<div class="response" id="mce-error-response" style="display:none"></div>
+				<div class="response" id="mce-success-response" style="display:none"></div>
+				</div>    <!-- real people should not fill this in and expect good things - do not remove this or risk form bot signups-->
+				<div style="position: absolute; left: -5000px;"><input type="text" name="b_8f57f508082f384933da29d05_90738edac7" tabindex="-1" value=""></div>
+				<div class="clear"><input type="submit" value="Subscribe" name="subscribe" id="mc-embedded-subscribe" class="button"></div>
+				</form>
+				</div>
+				<script type='text/javascript' src='//s3.amazonaws.com/downloads.mailchimp.com/js/mc-validate.js'></script><script type='text/javascript'>(function($) {window.fnames = new Array(); window.ftypes = new Array();fnames[0]='EMAIL';ftypes[0]='email';fnames[1]='FNAME';ftypes[1]='text';fnames[2]='LNAME';ftypes[2]='text';}(jQuery));var $mcj = jQuery.noConflict(true);</script>
+		<!--End mc_embed_signup-->
+		
     {% if site.analytics %}
     <script>
     var _gaq = _gaq || [];
@@ -29,30 +70,58 @@
     {% endif %}
   </head>
   <body>
-
+  
+  		<div class="nav-collapse collapse">
+  <ul class="nav pull-right">
+    <li><a href="/">Blog</a></li>
+    
+    <!-- Categories -->
+    <li><a href="/tag/design" class="{{ set_active('/tag/design') }}">Design</a></li>
+    <li><a href="/tag/web" class="{{ set_active('/tag/web') }}">Web</a></li>
+    <li><a href="/tag/ios" class="{{ set_active('/tag/ios') }}">iOS</a></li>
+    <li><a href="/tag/android" class="{{ set_active('/tag/android') }}">Android</a></li>
+    <!-- END Categories -->
+    
+    {% if pages %}
+      {% for page in pages %}
+        <li><a href="{{ page.permalink }}" class="{{ set_active(page.permalink) }}">{{ page.title }}</a></li>
+      {% endfor %}
+    {% endif %}
+  </ul>
+</div>
+    
     {% if is_login %}
-
+    
       {{ login_form }}
-
+    
     {% else %}
     <div class="wrap">
       <header class="header">
         <div class="avatar">
-          <a href="/"><img src="{{ site.avatar }}" class="img-circle" alt="{{ site.author }}" /></a>
+          <a href="http://pd.sim.edu.sg"><img src="{{ site.avatar }}" class="img-circle" alt="{{ site.author }}" /></a>
         </div>
-        <div class="nav-logo">
+		<div class="nav-logo">
           <div class="logo">
-            <h1><a href="/" rel="home">{{ site.name }}</a></h1>
+            <h1>SIMPD PDPA</h1>
           </div>
-          <nav id="nav">
+          <nav>
             <ul>
               <li><a href="/">Home</a></li>
-              {% if pages %}
-              {% for page in pages %}
-              <li><a href="{{ page.permalink }}" class="{{ set_active(page.permalink) }}">{{ page.title }}</a></li>
-              {% endfor %}
-              {% endif %}
-            </ul>
+			  <li><a href="/9-obligations-of-pdpa">9 Obligations</a>
+					<ul>
+							<li><a href="/consent">Consent</a></li>
+							<li><a href="/notification">Notification</a></li>
+							<li><a href="/purpose-limitation">Purpose Limitation</a></li>			
+							<li><a href="/access-correction">Access & Correction</a></li>		
+							<li><a href="/accuracy">Accuracy</a></li>					  
+							<li><a href="/protection">Protection</a></li>		
+							<li><a href="/retention">Retention</a></li>		
+							<li><a href="/transfer-limitation">Transfer Limitation</a></li>		
+							<li><a href="/openness">Openness</a></li>
+					</ul>
+			  <li><a href="/questions">Questions from the team</a></li>	
+			  </li>					
+			</ul>
           </nav>
         </div>
         <div class="social-icons">
@@ -90,10 +159,12 @@
             </li>
             {% endif %}
             <li>
+			<!--
               <a href="{{ site.atom_url }}" title="RSS" target="_blank">
                 <i class="icon-rss"></i>
                 <span class="hide-text">RSS</span>
               </a>
+			-->
             </li>
           </ul>
         </div>
@@ -158,7 +229,7 @@
 
       <article itemscope itemtype="http://schema.org/BlogPosting" class="post">
         <section class="content">
-
+          
           <div class="post-content" data-type-cleanup="true">
             <header>
               <h1>{{ post.title }}</h1>
@@ -179,7 +250,6 @@
           <div id="disqus_thread"></div>
           <script type="text/javascript">
           var disqus_shortname = '{{ site.disqus }}';
-          var disqus_url = '{{site.base_url}}{{ post.permalink }}';
           (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
             dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
@@ -225,7 +295,6 @@
           <div id="disqus_thread"></div>
           <script type="text/javascript">
           var disqus_shortname = '{{ site.disqus }}';
-          var disqus_url = '{{site.base_url}}{{ post.permalink }}';
           (function() {
             var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
             dsq.src = 'http://' + disqus_shortname + '.disqus.com/embed.js';
@@ -259,18 +328,15 @@
 
       <footer class="footer">
         <div class="copyright">
-          <p class="pull-left">All rights Reserved &copy; <a href="/">{{ site.name }}</a>.</p>
+          <p class="pull-left">All rights Reserved &copy SIM Professional Development | <a href="mailto:es.pdpa@gmail.com?Subject=ES-PDPA%20-%20(Brief Description)" target="_blank">Questions? Contact Us</p>
           <p class="pull-right">Powered by <a href="http://postach.io" target="_blank">Postach.io</a> | Design based on <a href="http://www.eleventhemes.com/gridly-theme/">Gridly</a></p>
         </div>
       </footer>
     </div>
-
     {% endif %}
 
     {{ footer_meta }}
-    
-    <!-- javasript -->
-    <script src="{{ assets('js/gridly.min.js') }}" /></script>
+    <script src="{{ static('themes/gridly/js/main.min.js') }}"></script>
 
 </body>
 </html>
